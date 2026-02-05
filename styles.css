@@ -2,8 +2,6 @@ html,
 body {
   width: 100%;
   min-height: 100%;
-  height: auto;
-  overflow-y: auto;
   background-color: var(--bg);
 }
 
@@ -21,7 +19,6 @@ body {
   font-family: "Space Grotesk", "Segoe UI", sans-serif;
   position: relative;
   overflow-x: hidden;
-  overflow-y: auto;
   padding-bottom: env(safe-area-inset-bottom);
 }
 
@@ -211,8 +208,6 @@ a {
 
 .panel-toggle {
   position: relative;
-  overflow-x: hidden;
-  overflow-y: auto;
   width: 44px;
   height: 26px;
   border-radius: 999px;
