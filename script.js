@@ -43,6 +43,8 @@
   const setTheme = (mode, persist = true) => {
     document.body.classList.toggle("theme-dark", mode === "dark");
     document.body.classList.toggle("theme-light", mode === "light");
+    document.documentElement.classList.toggle("theme-dark", mode === "dark");
+    document.documentElement.classList.toggle("theme-light", mode === "light");
     if (persist) {
       localStorage.setItem(storageKey, mode);
     }
