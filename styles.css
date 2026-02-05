@@ -7,7 +7,7 @@ body {
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #ffffff;
+  background: var(--bg);
   font-family: "Space Grotesk", "Segoe UI", sans-serif;
   position: relative;
   overflow-x: hidden;
@@ -32,10 +32,10 @@ body {
 }
 
 :root {
-  --bg: #f6f1ea;
-  --bg-deep: #efe4d6;
-  --ink: #1c1a18;
-  --muted: #5b554f;
+  --bg: #fcfbf8;
+  --bg-deep: #f5f2ec;
+  --ink: #000000;
+  --muted: #3f3a34;
   --accent: #1b4d6b;
   --accent-soft: #c7d7e2;
   --card: #ffffffcc;
