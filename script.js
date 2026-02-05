@@ -86,6 +86,23 @@
     document.body.classList.toggle("theme-snow");
   };
 
+  const attachEggButtons = () => {
+    document.querySelectorAll("[data-egg]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const egg = button.getAttribute("data-egg");
+        if (egg == "spacecats") {
+          toggleSpaceTheme();
+        }
+        if (egg == "makeitrain") {
+          toggleStormTheme();
+        }
+        if (egg == "makeitsnow") {
+          toggleSnowTheme();
+        }
+      });
+    });
+  };
+
   const stored = localStorage.getItem(storageKey);
   if (stored === "dark" || stored === "light") {
     setTheme(stored, false);

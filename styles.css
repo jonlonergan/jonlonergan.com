@@ -72,12 +72,14 @@ html {
   width: 100%;
   overflow-x: hidden;
   overscroll-behavior-x: none;
+  touch-action: pan-y;
 }
 
 body {
   width: 100%;
   overflow-x: hidden;
   overscroll-behavior-x: none;
+  touch-action: pan-y;
 }
 
 .page-home,
@@ -104,6 +106,13 @@ h1, h2, h3 {
   margin: 0 0 12px;
 }
 
+h1 {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-kerning: normal;
+  text-rendering: geometricPrecision;
+}
+
 .theme-dark h1,
 .theme-dark h2,
 .theme-dark h3 {
@@ -116,10 +125,10 @@ a {
 }
 
 .site-header {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+  gap: 12px;
   padding: 24px 7vw 12px;
   position: relative;
   z-index: 2;
@@ -133,6 +142,7 @@ a {
   border-radius: 999px;
   font-weight: 600;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .theme-dark .theme-toggle {
@@ -497,13 +507,16 @@ a {
 
 .site-nav {
   display: flex;
-  gap: 18px;
+  justify-content: center;
+  gap: 12px;
+  white-space: nowrap;
 }
 
 .nav-link {
   padding: 8px 12px;
   border-radius: 999px;
   color: var(--muted);
+  white-space: nowrap;
 }
 
 .nav-link.is-active,
@@ -676,6 +689,28 @@ a {
   gap: 16px;
 }
 
+.egg-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.egg-button {
+  border: 1px solid #d7cdc1;
+  background: #ffffffaa;
+  color: var(--muted);
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.theme-dark .egg-button {
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #eef2fb;
+  background: rgba(15, 18, 26, 0.85);
+}
+
 .resume {
   max-width: var(--max);
   margin: 0 auto;
@@ -813,35 +848,32 @@ a {
 
 @media (max-width: 720px) {
   .site-header {
-    flex-wrap: nowrap;
+    grid-template-columns: auto 1fr auto;
     align-items: center;
     gap: 6px;
     padding: 14px 4vw 8px;
   }
 
-  .logo {
-    flex: 0 0 auto;
-  }
-
   .site-nav {
-    flex: 1 1 auto;
-    display: flex;
     justify-content: center;
     gap: 6px;
     min-width: 0;
   }
 
+  .logo-mark {
+    width: 40px;
+    height: 40px;
+    font-size: 0.9rem;
+  }
+
   .nav-link {
     padding: 4px 8px;
     font-size: 0.82rem;
-    white-space: nowrap;
   }
 
   .theme-toggle {
-    flex: 0 0 auto;
     padding: 4px 8px;
     font-size: 0.8rem;
-    white-space: nowrap;
   }
 
   .hero {
@@ -856,5 +888,6 @@ a {
   .site-footer {
     flex-direction: column;
     align-items: flex-start;
+    gap: 10px;
   }
 }
