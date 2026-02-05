@@ -1,6 +1,8 @@
 html,
 body {
   width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
   background-color: var(--bg);
 }
 
@@ -80,17 +82,7 @@ body {
   touch-action: pan-y;
 }
 
-.page-home,
-.page-resume {
-  overflow-x: hidden;
-}
 
-main,
-section,
-footer {
-  max-width: 100vw;
-  overflow-x: clip;
-}
 
 body.theme-dark {
   background: radial-gradient(circle at top left, #0b0e14 0%, #0a0c12 55%, #07090e 100%);
