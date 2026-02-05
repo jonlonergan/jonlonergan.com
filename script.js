@@ -159,19 +159,39 @@
     if (!(target instanceof HTMLElement)) {
       return;
     }
-    const button = target.closest("[data-egg]");
-    if (!button) {
+
+    if (target.closest("[data-theme-toggle]")) {
+      toggleMenu();
+      applyThemeLabel();
       return;
     }
-    const egg = button.getAttribute("data-egg");
-    if (egg === "spacecats") {
-      toggleSpaceTheme();
+
+    const row = target.closest(".panel-row");
+    if (row) {
+      const themeOption = row.getAttribute("data-theme-option");
+      if (themeOption === "dark") {
+        const next = document.body.classList.contains("theme-dark") ? "light" : "dark";
+        setTheme(next);
+        return;
+      }
+
+      const egg = row.getAttribute("data-egg");
+      if (egg === "spacecats") {
+        toggleSpaceTheme();
+      }
+      if (egg === "makeitrain") {
+        toggleStormTheme();
+      }
+      if (egg === "makeitsnow") {
+        toggleSnowTheme();
+      }
+      applyThemeLabel();
+      return;
     }
-    if (egg === "makeitrain") {
-      toggleStormTheme();
-    }
-    if (egg === "makeitsnow") {
-      toggleSnowTheme();
+
+    if (!target.closest(".theme-menu")) {
+      closeMenu();
+      applyThemeLabel();
     }
   });
 
