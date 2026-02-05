@@ -1060,3 +1060,11 @@ a {
     font-size: 0.7rem;
   }
 }
+
+.debug-scroll body {
+  overflow: auto !important;
+}
+
+.debug-scroll * {
+  outline: 1px solid rgba(255, 0, 0, 0.25);
+}
