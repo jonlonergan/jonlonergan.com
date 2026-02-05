@@ -757,10 +757,15 @@ a {
   width: 100%;
 }
 
+.section-inner * {
+  max-width: 100%;
+}
+
 .pill-row {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  max-width: 100%;
 }
 
 .pill {
