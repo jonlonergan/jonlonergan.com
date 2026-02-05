@@ -36,7 +36,9 @@ body {
 }
 
 body.theme-dark {
-  background: transparent;
+  background: radial-gradient(circle at top left, #0b0e14 0%, #0a0c12 55%, #07090e 100%);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 body.theme-dark::before {
@@ -44,7 +46,9 @@ body.theme-dark::before {
 }
 
 body.theme-light {
-  background: transparent;
+  background: radial-gradient(circle at top left, #fdf9f4 0%, var(--bg) 55%, var(--bg-deep) 100%);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 body.theme-light::before {
@@ -88,7 +92,9 @@ body.theme-light {
 
 body.theme-space {
   color: #e6e7ff;
-  background: transparent;
+  background: radial-gradient(circle at top, #0b0f1f 0%, #05070d 65%, #000 100%);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 body.theme-space::before {
