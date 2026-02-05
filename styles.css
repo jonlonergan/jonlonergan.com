@@ -64,6 +64,16 @@ body {
   overflow-x: hidden;
 }
 
+html,
+body {
+  width: 100%;
+}
+
+.page-home,
+.page-resume {
+  overflow-x: hidden;
+}
+
 body.theme-dark {
   background: radial-gradient(circle at top left, #0b0e14 0%, #0a0c12 55%, #07090e 100%);
 }
