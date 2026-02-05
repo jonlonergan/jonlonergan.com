@@ -11,6 +11,11 @@
       return;
     }
     const isDark = document.body.classList.contains("theme-dark");
+    const compact = window.innerWidth <= 420;
+    if (compact) {
+      button.textContent = isDark ? "Light" : "Dark";
+      return;
+    }
     button.textContent = isDark ? "Light mode" : "Dark mode";
   };
 
@@ -101,6 +106,10 @@
       setTheme(next);
     });
   }
+
+  window.addEventListener("resize", () => {
+    applyThemeLabel();
+  });
 
   window.addEventListener("keydown", (event) => {
     if (event.key.length !== 1) {
