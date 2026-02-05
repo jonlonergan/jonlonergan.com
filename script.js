@@ -6,17 +6,37 @@
   const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
   const applyThemeLabel = () => {
+    const menu = document.querySelector(".theme-menu");
+    const panel = document.querySelector("[data-theme-panel]");
     const button = document.querySelector("[data-theme-toggle]");
-    if (!button) {
-      return;
-    }
+    const darkState = document.querySelector("[data-theme-state='dark']");
     const isDark = document.body.classList.contains("theme-dark");
-    const compact = window.innerWidth <= 420;
-    if (compact) {
-      button.textContent = isDark ? "Light" : "Dark";
-      return;
+
+    if (button) {
+      button.textContent = "Theme";
+      button.setAttribute("aria-expanded", menu?.classList.contains("is-open") ? "true" : "false");
     }
-    button.textContent = isDark ? "Light mode" : "Dark mode";
+
+    if (panel) {
+      panel.setAttribute("aria-hidden", menu?.classList.contains("is-open") ? "false" : "true");
+    }
+
+    if (darkState) {
+      darkState.textContent = isDark ? "On" : "Off";
+    }
+
+    document.querySelectorAll("[data-egg-state]").forEach((el) => {
+      const key = el.getAttribute("data-egg-state");
+      if (key == "spacecats") {
+        el.textContent = document.body.classList.contains("theme-space") ? "On" : "Off";
+      }
+      if (key == "makeitrain") {
+        el.textContent = document.body.classList.contains("theme-storm") ? "On" : "Off";
+      }
+      if (key == "makeitsnow") {
+        el.textContent = document.body.classList.contains("theme-snow") ? "On" : "Off";
+      }
+    });
   };
 
   const setTheme = (mode, persist = true) => {
@@ -26,6 +46,33 @@
       localStorage.setItem(storageKey, mode);
     }
     applyThemeLabel();
+  };
+
+  const menu = document.querySelector(".theme-menu");
+  const panel = document.querySelector("[data-theme-panel]");
+
+  const toggleMenu = () => {
+    if (!menu || !panel) {
+      return;
+    }
+    const open = menu.classList.toggle("is-open");
+    panel.setAttribute("aria-hidden", open ? "false" : "true");
+    const button = document.querySelector("[data-theme-toggle]");
+    if (button) {
+      button.setAttribute("aria-expanded", open ? "true" : "false");
+    }
+  };
+
+  const closeMenu = () => {
+    if (!menu || !panel) {
+      return;
+    }
+    menu.classList.remove("is-open");
+    panel.setAttribute("aria-hidden", "true");
+    const button = document.querySelector("[data-theme-toggle]");
+    if (button) {
+      button.setAttribute("aria-expanded", "false");
+    }
   };
 
   const toggleSpaceTheme = () => {
@@ -78,29 +125,16 @@
 
   const toggleStormTheme = () => {
     ensureRain();
+    const nextOn = !document.body.classList.contains("theme-storm");
     document.body.classList.toggle("theme-storm");
+    if (nextOn) {
+      setTheme("dark");
+    }
   };
 
   const toggleSnowTheme = () => {
     ensureSnow();
     document.body.classList.toggle("theme-snow");
-  };
-
-  const attachEggButtons = () => {
-    document.querySelectorAll("[data-egg]").forEach((button) => {
-      button.addEventListener("click", () => {
-        const egg = button.getAttribute("data-egg");
-        if (egg == "spacecats") {
-          toggleSpaceTheme();
-        }
-        if (egg == "makeitrain") {
-          toggleStormTheme();
-        }
-        if (egg == "makeitsnow") {
-          toggleSnowTheme();
-        }
-      });
-    });
   };
 
   const stored = localStorage.getItem(storageKey);
@@ -115,14 +149,6 @@
       setTheme(event.matches ? "dark" : "light", false);
     }
   });
-
-  const button = document.querySelector("[data-theme-toggle]");
-  if (button) {
-    button.addEventListener("click", () => {
-      const next = document.body.classList.contains("theme-dark") ? "light" : "dark";
-      setTheme(next);
-    });
-  }
 
   window.addEventListener("resize", () => {
     applyThemeLabel();
