@@ -3,7 +3,6 @@ body {
   width: 100%;
   overflow-x: hidden;
   overscroll-behavior-x: none;
-  touch-action: pan-y;
   background-color: var(--bg);
 }
 
@@ -638,7 +637,9 @@ a {
 }
 
 .theme-dark .nav-link {
-  color: var(--muted);
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(20, 24, 32, 0.8);
+  color: #e9eef8;
 }
 
 .theme-dark .nav-link.is-active,
