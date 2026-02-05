@@ -9,7 +9,6 @@
     const menu = document.querySelector(".theme-menu");
     const panel = document.querySelector("[data-theme-panel]");
     const button = document.querySelector("[data-theme-toggle]");
-    const darkState = document.querySelector("[data-theme-state='dark']");
     const isDark = document.body.classList.contains("theme-dark");
 
     if (button) {
@@ -21,21 +20,23 @@
       panel.setAttribute("aria-hidden", menu?.classList.contains("is-open") ? "false" : "true");
     }
 
-    if (darkState) {
-      darkState.textContent = isDark ? "On" : "Off";
-    }
-
-    document.querySelectorAll("[data-egg-state]").forEach((el) => {
-      const key = el.getAttribute("data-egg-state");
-      if (key == "spacecats") {
-        el.textContent = document.body.classList.contains("theme-space") ? "On" : "Off";
+    document.querySelectorAll(".panel-row").forEach((row) => {
+      const isDarkRow = row.getAttribute("data-theme-option") === "dark";
+      const egg = row.getAttribute("data-egg");
+      let on = false;
+      if (isDarkRow) {
+        on = isDark;
       }
-      if (key == "makeitrain") {
-        el.textContent = document.body.classList.contains("theme-storm") ? "On" : "Off";
+      if (egg === "spacecats") {
+        on = document.body.classList.contains("theme-space");
       }
-      if (key == "makeitsnow") {
-        el.textContent = document.body.classList.contains("theme-snow") ? "On" : "Off";
+      if (egg === "makeitrain") {
+        on = document.body.classList.contains("theme-storm");
       }
+      if (egg === "makeitsnow") {
+        on = document.body.classList.contains("theme-snow");
+      }
+      row.classList.toggle("is-on", on);
     });
   };
 
