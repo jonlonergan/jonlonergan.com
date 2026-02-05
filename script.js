@@ -3,7 +3,6 @@
   const maxLen = Math.max(...secrets.map((s) => s.length));
   let buffer = "";
   const storageKey = "jl-theme";
-  const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
   const applyThemeLabel = () => {
     const menu = document.querySelector(".theme-menu");
@@ -142,14 +141,8 @@
   if (stored === "dark" || stored === "light") {
     setTheme(stored, false);
   } else {
-    setTheme(mediaQuery.matches ? "dark" : "light", false);
+    setTheme("light", true);
   }
-
-  mediaQuery.addEventListener("change", (event) => {
-    if (!localStorage.getItem(storageKey)) {
-      setTheme(event.matches ? "dark" : "light", false);
-    }
-  });
 
   window.addEventListener("resize", () => {
     applyThemeLabel();
