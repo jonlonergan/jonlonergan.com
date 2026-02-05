@@ -651,19 +651,15 @@ a {
   color: #0a0d13;
 }
 
-.container {
-  max-width: var(--max);
-  margin: 0 auto;
-  width: 100%;
-  padding: 0 7vw;
-}
-
 .hero {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 32px;
   align-items: center;
-  padding: 60px 0 40px;
+  padding: 60px 7vw 40px;
+  max-width: var(--max);
+  margin: 0 auto;
+  width: 100%;
 }
 
 .hero-copy {
@@ -757,6 +753,13 @@ a {
 
 .section {
   padding: 20px 0 60px;
+}
+
+.container {
+  max-width: var(--max);
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 7vw;
 }
 
 .container * {
@@ -1006,12 +1009,12 @@ a {
     min-width: 200px;
   }
 
-    .hero {
+  .hero {
     grid-template-columns: 1fr;
-    padding: 40px 0 24px;
+    padding: 40px 5vw 24px;
   }
 
-    .section {
+  .section {
     padding: 16px 0 40px;
   }
 
