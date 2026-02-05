@@ -1,10 +1,6 @@
 html,
 body {
   width: 100%;
-  height: auto;
-  overflow-x: hidden;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
   background-color: var(--bg);
 }
 
@@ -73,17 +69,9 @@ body {
   background: radial-gradient(circle at top left, #fdf9f4 0%, var(--bg) 55%, var(--bg-deep) 100%);
   font-family: "Space Grotesk", "Segoe UI", sans-serif;
   position: relative;
-  overflow-y: auto;
   overflow-x: hidden;
 }
 
-html,
-body {
-  width: 100%;
-  overflow-x: hidden;
-  overscroll-behavior-x: none;
-  touch-action: pan-y;
-}
 
 
 
@@ -134,6 +122,7 @@ a {
   gap: 8px;
   padding: 24px 7vw 12px;
   position: relative;
+  overflow-x: hidden;
   overflow-y: auto;
   z-index: 10;
   flex-wrap: nowrap;
@@ -157,6 +146,7 @@ a {
 
 .theme-menu {
   position: relative;
+  overflow-x: hidden;
   overflow-y: auto;
   overflow: visible;
 }
@@ -195,6 +185,7 @@ a {
 
 .panel-toggle {
   position: relative;
+  overflow-x: hidden;
   overflow-y: auto;
   width: 44px;
   height: 26px;
@@ -250,6 +241,7 @@ a {
 .resume,
 .site-footer {
   position: relative;
+  overflow-x: hidden;
   overflow-y: auto;
   z-index: 2;
 }
