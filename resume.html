@@ -32,7 +32,27 @@
         <a class="nav-link" href="index.html">Home</a>
         <a class="nav-link is-active" href="resume.html">Resume</a>
       </nav>
-      <button class="theme-toggle" type="button" data-theme-toggle>Dark mode</button>
+      <div class="theme-menu">
+        <button class="theme-toggle" type="button" data-theme-toggle aria-expanded="false">Theme</button>
+        <div class="theme-panel" data-theme-panel aria-hidden="true">
+          <button class="panel-row" type="button" data-theme-option="dark">
+            <span>Dark mode</span>
+            <span class="panel-state" data-theme-state="dark">Off</span>
+          </button>
+          <button class="panel-row" type="button" data-egg="spacecats">
+            <span>Space Cats</span>
+            <span class="panel-state" data-egg-state="spacecats">Off</span>
+          </button>
+          <button class="panel-row" type="button" data-egg="makeitrain">
+            <span>Make It Rain</span>
+            <span class="panel-state" data-egg-state="makeitrain">Off</span>
+          </button>
+          <button class="panel-row" type="button" data-egg="makeitsnow">
+            <span>Make It Snow</span>
+            <span class="panel-state" data-egg-state="makeitsnow">Off</span>
+          </button>
+        </div>
+      </div>
     </header>
 
     <main class="resume">
@@ -256,11 +276,6 @@
       <span>© 2026 Jon Lonergan</span>
       <div class="footer-links">
         <a href="https://www.linkedin.com" rel="noreferrer">LinkedIn</a>
-      </div>
-      <div class="egg-controls">
-        <button class="egg-button" type="button" data-egg="spacecats">Space Cats</button>
-        <button class="egg-button" type="button" data-egg="makeitrain">Make It Rain</button>
-        <button class="egg-button" type="button" data-egg="makeitsnow">Make It Snow</button>
       </div>
     </footer>
     <script src="script.js"></script>
