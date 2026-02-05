@@ -68,13 +68,7 @@ body {
   overflow-x: hidden;
 }
 
-html {
-  width: 100%;
-  overflow-x: hidden;
-  overscroll-behavior-x: none;
-  touch-action: pan-y;
-}
-
+html,
 body {
   width: 100%;
   overflow-x: hidden;
@@ -85,6 +79,14 @@ body {
 .page-home,
 .page-resume {
   overflow-x: hidden;
+}
+
+main,
+header,
+section,
+footer {
+  max-width: 100vw;
+  overflow-x: clip;
 }
 
 body.theme-dark {
@@ -111,6 +113,8 @@ h1 {
   -moz-osx-font-smoothing: grayscale;
   font-kerning: normal;
   text-rendering: geometricPrecision;
+  font-weight: 600;
+  letter-spacing: 0.01em;
 }
 
 .theme-dark h1,
@@ -125,20 +129,21 @@ a {
 }
 
 .site-header {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
+  display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: space-between;
+  gap: 8px;
   padding: 24px 7vw 12px;
   position: relative;
   z-index: 2;
+  flex-wrap: nowrap;
 }
 
 .theme-toggle {
   border: 1px solid #d7cdc1;
   background: #ffffffaa;
   color: var(--muted);
-  padding: 8px 12px;
+  padding: 6px 10px;
   border-radius: 999px;
   font-weight: 600;
   cursor: pointer;
@@ -314,7 +319,7 @@ a {
     opacity: 1;
   }
   100% {
-    transform: translateX(140vw) translateY(-30px) rotate(8deg);
+    transform: translateX(115vw) translateY(-30px) rotate(8deg);
     opacity: 0;
   }
 }
@@ -508,12 +513,14 @@ a {
 .site-nav {
   display: flex;
   justify-content: center;
-  gap: 12px;
+  gap: 8px;
   white-space: nowrap;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .nav-link {
-  padding: 8px 12px;
+  padding: 6px 10px;
   border-radius: 999px;
   color: var(--muted);
   white-space: nowrap;
@@ -848,32 +855,29 @@ a {
 
 @media (max-width: 720px) {
   .site-header {
-    grid-template-columns: auto 1fr auto;
     align-items: center;
     gap: 6px;
-    padding: 14px 4vw 8px;
-  }
-
-  .site-nav {
-    justify-content: center;
-    gap: 6px;
-    min-width: 0;
+    padding: 12px 4vw 8px;
   }
 
   .logo-mark {
-    width: 40px;
-    height: 40px;
-    font-size: 0.9rem;
+    width: 38px;
+    height: 38px;
+    font-size: 0.85rem;
+  }
+
+  .site-nav {
+    gap: 6px;
   }
 
   .nav-link {
     padding: 4px 8px;
-    font-size: 0.82rem;
+    font-size: 0.78rem;
   }
 
   .theme-toggle {
     padding: 4px 8px;
-    font-size: 0.8rem;
+    font-size: 0.76rem;
   }
 
   .hero {
@@ -889,5 +893,16 @@ a {
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
+  }
+}
+
+@media (max-width: 420px) {
+  .nav-link {
+    padding: 4px 6px;
+    font-size: 0.72rem;
+  }
+  .theme-toggle {
+    padding: 4px 6px;
+    font-size: 0.7rem;
   }
 }

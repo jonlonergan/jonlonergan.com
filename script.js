@@ -128,6 +128,27 @@
     applyThemeLabel();
   });
 
+  document.addEventListener("click", (event) => {
+    const target = event.target;
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+    const button = target.closest("[data-egg]");
+    if (!button) {
+      return;
+    }
+    const egg = button.getAttribute("data-egg");
+    if (egg === "spacecats") {
+      toggleSpaceTheme();
+    }
+    if (egg === "makeitrain") {
+      toggleStormTheme();
+    }
+    if (egg === "makeitsnow") {
+      toggleSnowTheme();
+    }
+  });
+
   window.addEventListener("keydown", (event) => {
     if (event.key.length !== 1) {
       return;
