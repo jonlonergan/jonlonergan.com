@@ -142,7 +142,11 @@
     setTheme(stored, false);
   } else {
     setTheme("light", true);
+  document.body.classList.remove("theme-dark");
   }
+
+  // Force light mode on load until user opts into dark.
+  setTheme("light", true);
 
   window.addEventListener("resize", () => {
     applyThemeLabel();
