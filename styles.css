@@ -1,5 +1,13 @@
 html,
 body {
+  width: 100%;
+  min-height: 100%;
+  height: auto;
+  overflow-y: auto;
+  background-color: var(--bg);
+}
+
+body {
   margin: 0;
   min-height: 100vh;
   min-height: 100svh;
@@ -13,6 +21,7 @@ body {
   font-family: "Space Grotesk", "Segoe UI", sans-serif;
   position: relative;
   overflow-x: hidden;
+  overflow-y: auto;
   padding-bottom: env(safe-area-inset-bottom);
 }
 
@@ -143,8 +152,6 @@ a {
   gap: 8px;
   padding: 24px 7vw 12px;
   position: relative;
-  overflow-x: hidden;
-  overflow-y: auto;
   z-index: 10;
   flex-wrap: nowrap;
   overflow: visible;
@@ -167,8 +174,6 @@ a {
 
 .theme-menu {
   position: relative;
-  overflow-x: hidden;
-  overflow-y: auto;
   overflow: visible;
 }
 
