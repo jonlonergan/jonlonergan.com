@@ -70,23 +70,15 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: radial-gradient(circle at top left, #fdf9f4 0%, var(--bg) 55%, var(--bg-deep) 100%);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
   font-family: "Space Grotesk", "Segoe UI", sans-serif;
   position: relative;
   overflow-x: hidden;
   padding-bottom: env(safe-area-inset-bottom);
 }
 
-body::after {
-  content: "";
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: env(safe-area-inset-bottom);
-  background: var(--bg);
-  pointer-events: none;
-  z-index: 1;
-}
 
 
 
