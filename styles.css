@@ -1,6 +1,12 @@
 html,
 body {
+  width: 100%;
+  min-height: 100%;
   margin: 0;
+  background-color: var(--bg);
+}
+
+body {
   min-height: 100vh;
   min-height: 100svh;
   min-height: 100dvh;
@@ -8,23 +14,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: var(--bg);
-  font-family: "Space Grotesk", "Segoe UI", sans-serif;
-  position: relative;
-  overflow-x: hidden;
-  padding-bottom: env(safe-area-inset-bottom);
-}
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  min-height: 100svh;
-  min-height: 100dvh;
-  color: var(--ink);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background: radial-gradient(circle at top left, #fdf9f4 0%, var(--bg) 55%, var(--bg-deep) 100%);
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
   font-family: "Space Grotesk", "Segoe UI", sans-serif;
   position: relative;
   overflow-x: hidden;
@@ -46,41 +35,15 @@ body {
   --max: 1080px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0f1116;
-    --bg-deep: #0a0c10;
-    --ink: #f3f4f7;
-    --muted: #b6bdc8;
-    --accent: #6ea6c7;
-    --accent-soft: rgba(110, 166, 199, 0.25);
-    --card: rgba(20, 24, 32, 0.75);
-    --shadow: 0 16px 50px rgba(0, 0, 0, 0.35);
-  }
 }
-
-
-
 
 
 * {
   box-sizing: border-box;
 }
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  min-height: 100svh;
-  min-height: 100dvh;
-  color: var(--ink);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background: transparent;
-  font-family: "Space Grotesk", "Segoe UI", sans-serif;
-  position: relative;
-  overflow-x: hidden;
-  padding-bottom: env(safe-area-inset-bottom);
+  box-sizing: border-box;
 }
+
 
 
 
