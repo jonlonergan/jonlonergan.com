@@ -3,6 +3,7 @@
   const maxLen = Math.max(...secrets.map((s) => s.length));
   let buffer = "";
   const storageKey = "jl-theme";
+  const DEFAULT_THEME_MODE = "system";
   const systemQuery = window.matchMedia("(prefers-color-scheme: dark)");
   let themeMode = "system";
 
@@ -48,14 +49,11 @@
     });
   };
 
-  const setTheme = (mode, persist = true) => {
+  const setTheme = (mode) => {
     document.body.classList.toggle("theme-dark", mode === "dark");
     document.body.classList.toggle("theme-light", mode === "light");
     document.documentElement.classList.toggle("theme-dark", mode === "dark");
     document.documentElement.classList.toggle("theme-light", mode === "light");
-    if (persist) {
-      localStorage.setItem(storageKey, mode);
-    }
     applyThemeLabel();
   };
 
@@ -69,8 +67,11 @@
 
   const applyThemeMode = (mode, persist = true) => {
     themeMode = mode;
+    if (persist) {
+      localStorage.setItem(storageKey, mode);
+    }
     const next = mode === "system" ? (systemQuery.matches ? "dark" : "light") : mode;
-    setTheme(next, persist);
+    setTheme(next);
     enforceEggsForTheme(next);
   };
 
@@ -202,12 +203,12 @@
   if (stored === "dark" || stored === "light" || stored === "system") {
     applyThemeMode(stored, false);
   } else {
-    applyThemeMode("system", true);
+    applyThemeMode(DEFAULT_THEME_MODE, true);
   }
 
   systemQuery.addEventListener("change", () => {
-    if (themeMode === "system") {
-      applyThemeMode("system", false);
+    if (themeMode === DEFAULT_THEME_MODE) {
+      applyThemeMode(DEFAULT_THEME_MODE, false);
     }
   });
 
