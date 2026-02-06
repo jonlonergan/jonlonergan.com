@@ -135,6 +135,32 @@
     syncWeatherLayers();
   };
 
+  const ensureSpaceCats = () => {
+    const layer = document.querySelector(".space-cats");
+    if (!layer) {
+      return;
+    }
+
+    const emojis = ["🐈‍⬛", "😺", "🐱", "😸", "😻", "🐾"];
+    const targetCount = 18;
+
+    while (layer.children.length < targetCount) {
+      const span = document.createElement("span");
+      span.textContent = emojis[layer.children.length % emojis.length];
+      layer.appendChild(span);
+    }
+
+    Array.from(layer.children).forEach((node, index) => {
+      if (!(node instanceof HTMLElement)) {
+        return;
+      }
+      node.style.top = `${8 + ((index * 11) % 76)}%`;
+      node.style.left = `${-28 - ((index * 7) % 18)}%`;
+      node.style.animationDelay = `${(index * 1.2).toFixed(1)}s`;
+      node.style.fontSize = `${60 + (index % 6) * 6}px`;
+    });
+  };
+
   const ensureRain = () => {
     const layer = document.querySelector(".storm-rain");
     if (!layer || layer.dataset.ready === "true") {
@@ -180,6 +206,7 @@
   };
 
   const toggleSpaceTheme = () => {
+    ensureSpaceCats();
     const nextOn = !document.body.classList.contains("theme-space");
     setSpaceTheme(nextOn);
     return nextOn;
