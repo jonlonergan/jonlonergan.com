@@ -176,12 +176,15 @@
       const egg = row.getAttribute("data-egg");
       if (egg === "spacecats") {
         toggleSpaceTheme();
+        setTheme("dark");
       }
       if (egg === "makeitrain") {
         toggleStormTheme();
+        setTheme("dark");
       }
       if (egg === "makeitsnow") {
         toggleSnowTheme();
+        setTheme("dark");
       }
       applyThemeLabel();
       return;
