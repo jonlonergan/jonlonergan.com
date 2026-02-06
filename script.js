@@ -42,6 +42,8 @@
   const setTheme = (mode, persist = true) => {
     document.body.classList.toggle("theme-dark", mode === "dark");
     document.body.classList.toggle("theme-light", mode === "light");
+    document.documentElement.classList.toggle("theme-dark", mode === "dark");
+    document.documentElement.classList.toggle("theme-light", mode === "light");
     if (persist) {
       localStorage.setItem(storageKey, mode);
     }
@@ -75,8 +77,37 @@
     }
   };
 
-  const toggleSpaceTheme = () => {
-    document.body.classList.toggle("theme-space");
+  const setLayerActive = (selector, on) => {
+    const layer = document.querySelector(selector);
+    if (!layer) {
+      return;
+    }
+    layer.dataset.active = on ? "true" : "false";
+  };
+
+  const setSpaceTheme = (on) => {
+    document.body.classList.toggle("theme-space", on);
+    setLayerActive(".space-scene", on);
+    setLayerActive(".space-cats", on);
+  };
+
+  const syncWeatherLayers = () => {
+    const stormOn = document.body.classList.contains("theme-storm");
+    const snowOn = document.body.classList.contains("theme-snow");
+    setLayerActive(".storm-clouds", stormOn || snowOn);
+    setLayerActive(".storm-rain", stormOn);
+    setLayerActive(".snowfall", snowOn);
+    setLayerActive(".snowbank", snowOn);
+  };
+
+  const setStormTheme = (on) => {
+    document.body.classList.toggle("theme-storm", on);
+    syncWeatherLayers();
+  };
+
+  const setSnowTheme = (on) => {
+    document.body.classList.toggle("theme-snow", on);
+    syncWeatherLayers();
   };
 
   const ensureRain = () => {
@@ -123,18 +154,24 @@
     layer.dataset.ready = "true";
   };
 
+  const toggleSpaceTheme = () => {
+    const nextOn = !document.body.classList.contains("theme-space");
+    setSpaceTheme(nextOn);
+    return nextOn;
+  };
+
   const toggleStormTheme = () => {
     ensureRain();
     const nextOn = !document.body.classList.contains("theme-storm");
-    document.body.classList.toggle("theme-storm");
-    if (nextOn) {
-      setTheme("dark");
-    }
+    setStormTheme(nextOn);
+    return nextOn;
   };
 
   const toggleSnowTheme = () => {
     ensureSnow();
-    document.body.classList.toggle("theme-snow");
+    const nextOn = !document.body.classList.contains("theme-snow");
+    setSnowTheme(nextOn);
+    return nextOn;
   };
 
   const stored = localStorage.getItem(storageKey);
@@ -142,11 +179,7 @@
     setTheme(stored, false);
   } else {
     setTheme("light", true);
-  document.body.classList.remove("theme-dark");
   }
-
-  // Force light mode on load until user opts into dark.
-  setTheme("light", true);
 
   window.addEventListener("resize", () => {
     applyThemeLabel();
@@ -170,21 +203,33 @@
       if (themeOption === "dark") {
         const next = document.body.classList.contains("theme-dark") ? "light" : "dark";
         setTheme(next);
+        if (next === "light") {
+          setSpaceTheme(false);
+          setStormTheme(false);
+          setSnowTheme(false);
+        }
+        applyThemeLabel();
         return;
       }
 
       const egg = row.getAttribute("data-egg");
       if (egg === "spacecats") {
-        toggleSpaceTheme();
-        setTheme("dark");
+        const on = toggleSpaceTheme();
+        if (on) {
+          setTheme("dark");
+        }
       }
       if (egg === "makeitrain") {
-        toggleStormTheme();
-        setTheme("dark");
+        const on = toggleStormTheme();
+        if (on) {
+          setTheme("dark");
+        }
       }
       if (egg === "makeitsnow") {
-        toggleSnowTheme();
-        setTheme("dark");
+        const on = toggleSnowTheme();
+        if (on) {
+          setTheme("dark");
+        }
       }
       applyThemeLabel();
       return;
@@ -203,15 +248,27 @@
 
     buffer = (buffer + event.key.toLowerCase()).slice(-maxLen);
     if (buffer.endsWith("spacecats")) {
-      toggleSpaceTheme();
+      const on = toggleSpaceTheme();
+      if (on) {
+        setTheme("dark");
+      }
+      applyThemeLabel();
       buffer = "";
     }
     if (buffer.endsWith("makeitrain")) {
-      toggleStormTheme();
+      const on = toggleStormTheme();
+      if (on) {
+        setTheme("dark");
+      }
+      applyThemeLabel();
       buffer = "";
     }
     if (buffer.endsWith("makeitsnow")) {
-      toggleSnowTheme();
+      const on = toggleSnowTheme();
+      if (on) {
+        setTheme("dark");
+      }
+      applyThemeLabel();
       buffer = "";
     }
   });

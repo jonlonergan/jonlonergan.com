@@ -7,9 +7,7 @@ body {
 }
 
 body {
-  min-height: 100vh;
-  min-height: 100svh;
-  min-height: 100dvh;
+  min-height: 100%;
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -17,7 +15,9 @@ body {
   font-family: "Space Grotesk", "Segoe UI", sans-serif;
   position: relative;
   overflow-x: hidden;
-  padding-bottom: env(safe-area-inset-bottom);
+  padding-bottom: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 :root {
@@ -33,12 +33,14 @@ body {
   --radius-md: 16px;
   --radius-sm: 12px;
   --max: 1080px;
+}
 
 * {
   box-sizing: border-box;
 }
 
-body.theme-dark {
+body.theme-dark,
+html.theme-dark {
   --bg: #000000;
   --bg-deep: #000000;
   --ink: #ffffff;
@@ -50,7 +52,8 @@ body.theme-dark {
   background: #000000;
 }
 
-body.theme-light {
+body.theme-light,
+html.theme-light {
   --bg: #fcfbf8;
   --bg-deep: #f5f2ec;
   --ink: #000000;
@@ -102,9 +105,10 @@ a {
 }
 
 .site-header {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 8px;
   padding: 24px 7vw 12px;
   position: relative;
@@ -255,11 +259,11 @@ a {
 }
 
 .theme-space .pill {
-  padding: 6px 12px;
+  padding: 8px 14px;
   border-radius: 999px;
   background: rgba(27, 77, 107, 0.12);
   color: var(--muted);
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   cursor: default;
 }
 
@@ -303,6 +307,10 @@ a {
     radial-gradient(circle at 80% 20%, rgba(83, 214, 255, 0.25) 0%, rgba(83, 214, 255, 0) 40%),
     radial-gradient(circle at 60% 75%, rgba(255, 120, 214, 0.25) 0%, rgba(255, 120, 214, 0) 45%);
   background-repeat: no-repeat;
+}
+
+.space-scene[data-active="true"] {
+  opacity: 1;
 }
 
 .space-scene::before {
@@ -349,12 +357,26 @@ a {
   pointer-events: none;
   opacity: 0;
   transition: opacity 400ms ease;
-  z-index: 0;
+  z-index: 1;
   overflow: hidden;
+  display: block;
+  visibility: hidden;
 }
 
 .theme-space .space-cats {
   opacity: 1;
+  display: block;
+  visibility: visible;
+}
+
+.space-cats[data-active="true"],
+.storm-clouds[data-active="true"],
+.storm-rain[data-active="true"],
+.snowfall[data-active="true"],
+.snowbank[data-active="true"] {
+  opacity: 1;
+  display: block;
+  visibility: visible;
 }
 
 .space-cats span {
@@ -426,10 +448,14 @@ a {
   transition: opacity 300ms ease;
   z-index: 1;
   overflow: hidden;
+  display: block;
+  visibility: hidden;
 }
 
 .theme-storm .storm-rain {
   opacity: 1;
+  display: block;
+  visibility: visible;
 }
 
 .storm-rain span {
@@ -482,16 +508,16 @@ a {
     opacity: 0;
   }
   92% {
-    opacity: 0.35;
+    opacity: 0.5;
   }
   94% {
-    opacity: 0.1;
+    opacity: 0.2;
   }
   96% {
-    opacity: 0.45;
+    opacity: 0.65;
   }
   97% {
-    opacity: 0.05;
+    opacity: 0.1;
   }
 }
 
@@ -503,10 +529,14 @@ a {
   transition: opacity 300ms ease;
   z-index: 1;
   overflow: hidden;
+  display: block;
+  visibility: hidden;
 }
 
 .theme-snow .snowfall {
   opacity: 1;
+  display: block;
+  visibility: visible;
 }
 
 .snowfall span {
@@ -535,7 +565,7 @@ a {
 }
 
 .theme-snow .snowbank {
-  opacity: 1;
+  opacity: 0;
 }
 
 @keyframes snowFall {
@@ -581,6 +611,10 @@ a {
   white-space: nowrap;
   flex: 1 1 auto;
   min-width: 0;
+}
+ 
+.site-nav {
+  justify-self: center;
 }
 
 .nav-link {
@@ -762,11 +796,15 @@ a {
 .site-footer {
   display: flex;
   margin-top: auto;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   gap: 12px;
-  padding: 28px 7vw 40px;
+  padding: 20px 7vw 8px;
   color: var(--muted);
+}
+
+.footer-links:empty {
+  display: none;
 }
 
 .footer-links {
@@ -817,7 +855,7 @@ a {
 .resume {
   max-width: var(--max);
   margin: 0 auto;
-  padding: 40px 7vw 60px;
+  padding: 40px 7vw 0;
 }
 
 .resume-hero {
@@ -905,7 +943,7 @@ a {
 }
 
 .bg-orb {
-  position: absolute;
+  position: fixed;
   width: 420px;
   height: 420px;
   border-radius: 50%;
@@ -1013,10 +1051,4 @@ a {
     padding: 4px 6px;
     font-size: 0.7rem;
   }
-}
-
-  overflow: auto !important;
-}
-
-  outline: 1px solid rgba(255, 0, 0, 0.25);
 }
