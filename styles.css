@@ -1069,9 +1069,21 @@ a {
 
 @media (max-width: 720px) {
   .site-header {
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      "logo options"
+      "nav nav";
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     padding: 12px 4vw 8px;
+  }
+
+  .logo {
+    grid-area: logo;
+  }
+
+  .theme-menu {
+    grid-area: options;
   }
 
   .logo-mark {
@@ -1081,21 +1093,27 @@ a {
   }
 
   .site-nav {
+    grid-area: nav;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 6px;
   }
 
-      .nav-link {
+  .nav-link {
     padding: 0 10px;
     font-size: 0.78rem;
     height: 34px;
-    min-width: 94px;
+    min-width: 0;
+    width: 100%;
   }
 
-      .theme-toggle {
+  .theme-toggle {
     padding: 0 10px;
     font-size: 0.78rem;
     height: 34px;
-    min-width: 94px;
+    min-width: 0;
+    width: auto;
   }
 
   .theme-panel {
