@@ -37,24 +37,33 @@
         <a class="nav-link" href="https://www.linkedin.com" rel="noreferrer">LinkedIn</a>
       </nav>
       <div class="theme-menu">
-        <button class="theme-toggle" type="button" data-theme-toggle aria-expanded="false">Theme</button>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-expanded="false">Options</button>
         <div class="theme-panel" data-theme-panel aria-hidden="true">
-          <button class="panel-row" type="button" data-theme-option="dark">
-            <span>Dark mode</span>
-            <span class="panel-toggle" data-theme-state="dark"></span>
-          </button>
-          <button class="panel-row" type="button" data-egg="spacecats">
-            <span>Space Cats</span>
-            <span class="panel-toggle" data-egg-state="spacecats"></span>
-          </button>
-          <button class="panel-row" type="button" data-egg="makeitrain">
-            <span>Make It Rain</span>
-            <span class="panel-toggle" data-egg-state="makeitrain"></span>
-          </button>
-          <button class="panel-row" type="button" data-egg="makeitsnow">
-            <span>Make It Snow</span>
-            <span class="panel-toggle" data-egg-state="makeitsnow"></span>
-          </button>
+          <div class="panel-section">
+            <div class="panel-title">Appearance</div>
+            <div class="segmented" role="radiogroup" aria-label="Theme">
+              <button class="segment" type="button" data-theme-option="system" role="radio" aria-checked="true">System</button>
+              <button class="segment" type="button" data-theme-option="light" role="radio" aria-checked="false">Light</button>
+              <button class="segment" type="button" data-theme-option="dark" role="radio" aria-checked="false">Dark</button>
+            </div>
+            <div class="panel-help">Matches your device appearance.</div>
+          </div>
+
+          <div class="panel-section">
+            <div class="panel-title">Fun</div>
+            <button class="fun-row" type="button" data-egg="spacecats">
+              <span>Space Cats ✨</span>
+              <span class="fun-check" aria-hidden="true"></span>
+            </button>
+            <button class="fun-row" type="button" data-egg="makeitrain">
+              <span>Make It Rain 💧</span>
+              <span class="fun-check" aria-hidden="true"></span>
+            </button>
+            <button class="fun-row" type="button" data-egg="makeitsnow">
+              <span>Make It Snow ❄️</span>
+              <span class="fun-check" aria-hidden="true"></span>
+            </button>
+          </div>
         </div>
       </div>
     </header>

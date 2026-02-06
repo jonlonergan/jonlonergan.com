@@ -3,6 +3,8 @@
   const maxLen = Math.max(...secrets.map((s) => s.length));
   let buffer = "";
   const storageKey = "jl-theme";
+  const systemQuery = window.matchMedia("(prefers-color-scheme: dark)");
+  let themeMode = "system";
 
   const applyThemeLabel = () => {
     const menu = document.querySelector(".theme-menu");
@@ -11,7 +13,7 @@
     const isDark = document.body.classList.contains("theme-dark");
 
     if (button) {
-      button.textContent = "Theme";
+      button.textContent = "Options";
       button.setAttribute("aria-expanded", menu?.classList.contains("is-open") ? "true" : "false");
     }
 
@@ -19,13 +21,20 @@
       panel.setAttribute("aria-hidden", menu?.classList.contains("is-open") ? "false" : "true");
     }
 
-    document.querySelectorAll(".panel-row").forEach((row) => {
-      const isDarkRow = row.getAttribute("data-theme-option") === "dark";
+    document.querySelectorAll(".segment").forEach((segment) => {
+      const option = segment.getAttribute("data-theme-option");
+      const on = themeMode === option;
+      segment.classList.toggle("is-selected", on);
+      segment.setAttribute("aria-checked", on ? "true" : "false");
+    });
+
+    document.querySelectorAll(".panel-help").forEach((help) => {
+      help.classList.toggle("is-visible", themeMode === "system");
+    });
+
+    document.querySelectorAll(".fun-row").forEach((row) => {
       const egg = row.getAttribute("data-egg");
       let on = false;
-      if (isDarkRow) {
-        on = isDark;
-      }
       if (egg === "spacecats") {
         on = document.body.classList.contains("theme-space");
       }
@@ -48,6 +57,21 @@
       localStorage.setItem(storageKey, mode);
     }
     applyThemeLabel();
+  };
+
+  const enforceEggsForTheme = (mode) => {
+    if (mode === "light") {
+      setSpaceTheme(false);
+      setStormTheme(false);
+      setSnowTheme(false);
+    }
+  };
+
+  const applyThemeMode = (mode, persist = true) => {
+    themeMode = mode;
+    const next = mode === "system" ? (systemQuery.matches ? "dark" : "light") : mode;
+    setTheme(next, persist);
+    enforceEggsForTheme(next);
   };
 
   const menu = document.querySelector(".theme-menu");
@@ -175,11 +199,17 @@
   };
 
   const stored = localStorage.getItem(storageKey);
-  if (stored === "dark" || stored === "light") {
-    setTheme(stored, false);
+  if (stored === "dark" || stored === "light" || stored === "system") {
+    applyThemeMode(stored, false);
   } else {
-    setTheme("light", true);
+    applyThemeMode("system", true);
   }
+
+  systemQuery.addEventListener("change", () => {
+    if (themeMode === "system") {
+      applyThemeMode("system", false);
+    }
+  });
 
   window.addEventListener("resize", () => {
     applyThemeLabel();
@@ -197,38 +227,35 @@
       return;
     }
 
-    const row = target.closest(".panel-row");
-    if (row) {
-      const themeOption = row.getAttribute("data-theme-option");
-      if (themeOption === "dark") {
-        const next = document.body.classList.contains("theme-dark") ? "light" : "dark";
-        setTheme(next);
-        if (next === "light") {
-          setSpaceTheme(false);
-          setStormTheme(false);
-          setSnowTheme(false);
-        }
+    const segment = target.closest(".segment");
+    if (segment) {
+      const themeOption = segment.getAttribute("data-theme-option");
+      if (themeOption === "system" || themeOption === "light" || themeOption === "dark") {
+        applyThemeMode(themeOption);
         applyThemeLabel();
         return;
       }
+    }
 
-      const egg = row.getAttribute("data-egg");
+    const funRow = target.closest(".fun-row");
+    if (funRow) {
+      const egg = funRow.getAttribute("data-egg");
       if (egg === "spacecats") {
         const on = toggleSpaceTheme();
         if (on) {
-          setTheme("dark");
+          applyThemeMode("dark", false);
         }
       }
       if (egg === "makeitrain") {
         const on = toggleStormTheme();
         if (on) {
-          setTheme("dark");
+          applyThemeMode("dark", false);
         }
       }
       if (egg === "makeitsnow") {
         const on = toggleSnowTheme();
         if (on) {
-          setTheme("dark");
+          applyThemeMode("dark", false);
         }
       }
       applyThemeLabel();
@@ -250,7 +277,7 @@
     if (buffer.endsWith("spacecats")) {
       const on = toggleSpaceTheme();
       if (on) {
-        setTheme("dark");
+        applyThemeMode("dark", false);
       }
       applyThemeLabel();
       buffer = "";
@@ -258,7 +285,7 @@
     if (buffer.endsWith("makeitrain")) {
       const on = toggleStormTheme();
       if (on) {
-        setTheme("dark");
+        applyThemeMode("dark", false);
       }
       applyThemeLabel();
       buffer = "";
@@ -266,7 +293,7 @@
     if (buffer.endsWith("makeitsnow")) {
       const on = toggleSnowTheme();
       if (on) {
-        setTheme("dark");
+        applyThemeMode("dark", false);
       }
       applyThemeLabel();
       buffer = "";
