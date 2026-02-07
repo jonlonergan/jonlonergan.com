@@ -6,30 +6,23 @@
   const DEFAULT_THEME_MODE = "system";
   const systemQuery = window.matchMedia("(prefers-color-scheme: dark)");
   let themeMode = "system";
-  const themeColorLightMeta = document.querySelector("#theme-color-light");
-  const themeColorDarkMeta = document.querySelector("#theme-color-dark");
+  let themeColorMeta = document.querySelector("#theme-color") || document.querySelector('meta[name="theme-color"]');
 
   const syncBrowserChrome = (mode) => {
-    const cssBg = getComputedStyle(document.body).getPropertyValue("--bg").trim();
-    const lightColor = cssBg || "#fcfbf8";
+    const computed = getComputedStyle(document.body);
+    const lightColor = computed.getPropertyValue("--bg-deep").trim() || "#f5f2ec";
+    const color = mode === "dark" ? "#000000" : lightColor;
 
-    if (themeColorLightMeta && themeColorDarkMeta) {
-      themeColorLightMeta.setAttribute("content", lightColor);
-      if (mode === "dark") {
-        themeColorLightMeta.setAttribute("media", "not all");
-        themeColorDarkMeta.setAttribute("media", "all");
-      } else {
-        themeColorDarkMeta.setAttribute("media", "not all");
-        themeColorLightMeta.setAttribute("media", "all");
-      }
-      return;
+    if (!themeColorMeta) {
+      themeColorMeta = document.createElement("meta");
+      themeColorMeta.setAttribute("id", "theme-color");
+      themeColorMeta.setAttribute("name", "theme-color");
+      document.head.appendChild(themeColorMeta);
     }
 
-    const fallback = document.querySelector('meta[name="theme-color"]');
-    if (!fallback) {
-      return;
-    }
-    fallback.setAttribute("content", mode === "dark" ? "#000000" : lightColor);
+    themeColorMeta.setAttribute("content", color);
+    // Re-append to force Safari to repaint address/status bar colors immediately.
+    document.head.appendChild(themeColorMeta);
   };
 
   const applyThemeLabel = () => {
