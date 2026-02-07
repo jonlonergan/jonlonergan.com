@@ -6,6 +6,14 @@
   const DEFAULT_THEME_MODE = "system";
   const systemQuery = window.matchMedia("(prefers-color-scheme: dark)");
   let themeMode = "system";
+  const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+
+  const syncBrowserChrome = (mode) => {
+    if (!themeColorMeta) {
+      return;
+    }
+    themeColorMeta.setAttribute("content", mode === "dark" ? "#000000" : "#fcfbf8");
+  };
 
   const applyThemeLabel = () => {
     const menu = document.querySelector(".theme-menu");
@@ -54,6 +62,7 @@
     document.body.classList.toggle("theme-light", mode === "light");
     document.documentElement.classList.toggle("theme-dark", mode === "dark");
     document.documentElement.classList.toggle("theme-light", mode === "light");
+    syncBrowserChrome(mode);
     applyThemeLabel();
   };
 
