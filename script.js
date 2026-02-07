@@ -6,21 +6,30 @@
   const DEFAULT_THEME_MODE = "system";
   const systemQuery = window.matchMedia("(prefers-color-scheme: dark)");
   let themeMode = "system";
-  let themeColorMeta = document.querySelector('meta[name="theme-color"]');
+  const themeColorLightMeta = document.querySelector("#theme-color-light");
+  const themeColorDarkMeta = document.querySelector("#theme-color-dark");
 
   const syncBrowserChrome = (mode) => {
-    if (!themeColorMeta) {
+    const cssBg = getComputedStyle(document.body).getPropertyValue("--bg").trim();
+    const lightColor = cssBg || "#fcfbf8";
+
+    if (themeColorLightMeta && themeColorDarkMeta) {
+      themeColorLightMeta.setAttribute("content", lightColor);
+      if (mode === "dark") {
+        themeColorLightMeta.setAttribute("media", "not all");
+        themeColorDarkMeta.setAttribute("media", "all");
+      } else {
+        themeColorDarkMeta.setAttribute("media", "not all");
+        themeColorLightMeta.setAttribute("media", "all");
+      }
       return;
     }
-    const cssBg = getComputedStyle(document.body).getPropertyValue("--bg").trim();
-    const color = mode === "dark" ? "#000000" : (cssBg || "#fcfbf8");
 
-    // Safari on iOS can keep stale toolbar colors unless the theme-color node is replaced.
-    const replacement = document.createElement("meta");
-    replacement.setAttribute("name", "theme-color");
-    replacement.setAttribute("content", color);
-    themeColorMeta.replaceWith(replacement);
-    themeColorMeta = replacement;
+    const fallback = document.querySelector('meta[name="theme-color"]');
+    if (!fallback) {
+      return;
+    }
+    fallback.setAttribute("content", mode === "dark" ? "#000000" : lightColor);
   };
 
   const applyThemeLabel = () => {
