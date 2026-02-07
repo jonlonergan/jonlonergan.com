@@ -10,7 +10,7 @@
 
   const syncBrowserChrome = (mode) => {
     const computed = getComputedStyle(document.body);
-    const lightColor = computed.getPropertyValue("--bg-deep").trim() || "#f5f2ec";
+    const lightColor = computed.getPropertyValue("--bg").trim() || "#fcfbf8";
     const color = mode === "dark" ? "#000000" : lightColor;
 
     if (!themeColorMeta) {
