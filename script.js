@@ -12,6 +12,11 @@
     if (!themeColorMeta) {
       return;
     }
+    const bg = getComputedStyle(document.body).getPropertyValue("--bg").trim();
+    if (bg) {
+      themeColorMeta.setAttribute("content", bg);
+      return;
+    }
     themeColorMeta.setAttribute("content", mode === "dark" ? "#000000" : "#fcfbf8");
   };
 
