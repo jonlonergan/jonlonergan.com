@@ -3,7 +3,11 @@ body {
   width: 100%;
   min-height: 100%;
   margin: 0;
-  background-color: var(--bg);
+  background-color: var(--safari-tint);
+}
+
+html {
+  color-scheme: light;
 }
 
 body {
@@ -11,7 +15,7 @@ body {
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: var(--bg);
+  background: var(--safari-tint);
   font-family: "Space Grotesk", "Segoe UI", sans-serif;
   position: relative;
   overflow-x: hidden;
@@ -21,8 +25,11 @@ body {
 }
 
 :root {
+  --safari-tint-light: #fcfbf8;
+  --safari-tint-dark: #000000;
+  --safari-tint: var(--safari-tint-light);
   --bg: #fcfbf8;
-  --bg-deep: #f5f2ec;
+  --bg-deep: #fcfbf8;
   --ink: #000000;
   --muted: #3f3a34;
   --accent: #1b4d6b;
@@ -41,6 +48,7 @@ body {
 
 body.theme-dark,
 html.theme-dark {
+  --safari-tint: var(--safari-tint-dark);
   --bg: #000000;
   --bg-deep: #000000;
   --ink: #ffffff;
@@ -50,12 +58,14 @@ html.theme-dark {
   --card: rgba(20, 24, 32, 0.75);
   --shadow: 0 16px 50px rgba(0, 0, 0, 0.35);
   background: #000000;
+  color-scheme: dark;
 }
 
 body.theme-light,
 html.theme-light {
+  --safari-tint: var(--safari-tint-light);
   --bg: #fcfbf8;
-  --bg-deep: #f5f2ec;
+  --bg-deep: #fcfbf8;
   --ink: #000000;
   --muted: #3f3a34;
   --accent: #1b4d6b;
@@ -63,6 +73,7 @@ html.theme-light {
   --card: #ffffffcc;
   --shadow: 0 12px 40px rgba(28, 26, 24, 0.12);
   background: #fcfbf8;
+  color-scheme: light;
 }
 
 
@@ -115,6 +126,7 @@ a {
   z-index: 10;
   flex-wrap: nowrap;
   overflow: visible;
+  background-color: var(--safari-tint);
 }
 
 .logo {
@@ -455,14 +467,17 @@ a {
 
 .space-cats span {
   position: absolute;
+  left: var(--start-x, -120px);
+  top: var(--start-y, 220px);
   font-size: 78px;
-  animation: catFloat 18s linear infinite;
+  animation: catFloat var(--cat-duration, 18s) linear infinite;
+  animation-fill-mode: both;
   filter: drop-shadow(0 0 6px rgba(220, 252, 255, 0.6));
 }
 
 @keyframes catFloat {
   0% {
-    transform: translateX(0) translateY(0) rotate(-8deg);
+    transform: translate3d(0, 0, 0) rotate(var(--cat-rot-start, -8deg));
     opacity: 0;
   }
   10% {
@@ -472,39 +487,21 @@ a {
     opacity: 1;
   }
   100% {
-    transform: translateX(115vw) translateY(-30px) rotate(8deg);
+    transform: translate3d(var(--cat-dx, 115vw), var(--cat-dy, -30px), 0) rotate(var(--cat-rot-end, 8deg));
     opacity: 0;
   }
 }
 
 .storm-clouds {
-  position: fixed;
-  top: -30vh;
-  left: 0;
-  right: 0;
-  height: 40vh;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 400ms ease;
-  z-index: 1;
+  display: none !important;
 }
 
 .theme-storm .storm-clouds {
-  opacity: 1;
-  animation: cloudsRoll 1.8s ease-out forwards;
-  background:
-    radial-gradient(circle at 20% 70%, rgba(20, 24, 32, 0.95) 0%, rgba(20, 24, 32, 0) 60%),
-    radial-gradient(circle at 50% 80%, rgba(24, 28, 36, 0.95) 0%, rgba(24, 28, 36, 0) 65%),
-    radial-gradient(circle at 80% 75%, rgba(16, 20, 28, 0.95) 0%, rgba(16, 20, 28, 0) 60%);
+  display: none !important;
 }
 
 .theme-snow .storm-clouds {
-  opacity: 1;
-  animation: cloudsRoll 1.8s ease-out forwards;
-  background:
-    radial-gradient(circle at 20% 70%, rgba(40, 44, 52, 0.9) 0%, rgba(40, 44, 52, 0) 60%),
-    radial-gradient(circle at 50% 80%, rgba(46, 50, 58, 0.9) 0%, rgba(46, 50, 58, 0) 65%),
-    radial-gradient(circle at 80% 75%, rgba(36, 40, 48, 0.9) 0%, rgba(36, 40, 48, 0) 60%);
+  display: none !important;
 }
 
 .storm-rain {
@@ -1016,14 +1013,7 @@ a {
 }
 
 .bg-orb {
-  position: fixed;
-  width: 420px;
-  height: 420px;
-  border-radius: 50%;
-  filter: blur(0px);
-  opacity: 0.5;
-  z-index: 0;
-  animation: drift 18s ease-in-out infinite;
+  display: none;
 }
 
 .bg-orb-1 {

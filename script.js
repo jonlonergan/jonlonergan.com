@@ -6,12 +6,24 @@
   const DEFAULT_THEME_MODE = "system";
   const systemQuery = window.matchMedia("(prefers-color-scheme: dark)");
   let themeMode = "system";
+  const themeColorLightMeta = document.querySelector("#theme-color-light");
+  const themeColorDarkMeta = document.querySelector("#theme-color-dark");
   let themeColorMeta = document.querySelector("#theme-color") || document.querySelector('meta[name="theme-color"]');
 
   const syncBrowserChrome = (mode) => {
-    const computed = getComputedStyle(document.body);
-    const lightColor = computed.getPropertyValue("--bg").trim() || "#fcfbf8";
-    const color = mode === "dark" ? "#000000" : lightColor;
+    const computed = getComputedStyle(document.documentElement);
+    const lightColor = computed.getPropertyValue("--safari-tint-light").trim() || "#fcfbf8";
+    const darkColor = computed.getPropertyValue("--safari-tint-dark").trim() || "#000000";
+    const color = mode === "dark" ? darkColor : lightColor;
+
+    if (themeColorLightMeta) {
+      themeColorLightMeta.setAttribute("content", lightColor);
+      themeColorLightMeta.setAttribute("media", mode === "dark" ? "not all" : "all");
+    }
+    if (themeColorDarkMeta) {
+      themeColorDarkMeta.setAttribute("content", darkColor);
+      themeColorDarkMeta.setAttribute("media", mode === "dark" ? "all" : "not all");
+    }
 
     if (!themeColorMeta) {
       themeColorMeta = document.createElement("meta");
@@ -21,7 +33,6 @@
     }
 
     themeColorMeta.setAttribute("content", color);
-    // Re-append to force Safari to repaint address/status bar colors immediately.
     document.head.appendChild(themeColorMeta);
   };
 
@@ -169,14 +180,54 @@
       layer.appendChild(span);
     }
 
+    const header = document.querySelector(".site-header");
+    const headerBottom = header ? header.getBoundingClientRect().bottom : 100;
+    const minY = Math.max(headerBottom + 16, 96);
+    const width = Math.max(window.innerWidth, 360);
+    const height = Math.max(window.innerHeight, minY + 240);
+
+    const makePath = () => {
+      const edge = Math.floor(Math.random() * 4);
+      let startX = -120;
+      let startY = minY + Math.random() * Math.max(40, height - minY - 120);
+      let endX = width + 120;
+      let endY = minY + Math.random() * Math.max(40, height - minY - 120);
+
+      if (edge === 1) {
+        startX = width + 120;
+        endX = -120;
+      }
+      if (edge === 2) {
+        startX = Math.random() * width;
+        startY = minY;
+        endX = Math.random() * width;
+        endY = height + 120;
+      }
+      if (edge === 3) {
+        startX = Math.random() * width;
+        startY = height + 120;
+        endX = Math.random() * width;
+        endY = minY;
+      }
+
+      return { startX, startY, endX, endY };
+    };
+
     Array.from(layer.children).forEach((node, index) => {
       if (!(node instanceof HTMLElement)) {
         return;
       }
-      node.style.top = `${8 + ((index * 11) % 76)}%`;
-      node.style.left = `${-28 - ((index * 7) % 18)}%`;
-      node.style.animationDelay = `${(index * 1.2).toFixed(1)}s`;
-      node.style.fontSize = `${60 + (index % 6) * 6}px`;
+      const { startX, startY, endX, endY } = makePath();
+      node.style.setProperty("--start-x", `${startX}px`);
+      node.style.setProperty("--start-y", `${startY}px`);
+      node.style.setProperty("--cat-dx", `${endX - startX}px`);
+      node.style.setProperty("--cat-dy", `${endY - startY}px`);
+      node.style.setProperty("--cat-rot-start", `${-14 + Math.random() * 12}deg`);
+      node.style.setProperty("--cat-rot-end", `${-4 + Math.random() * 18}deg`);
+      const duration = 14 + Math.random() * 10;
+      node.style.setProperty("--cat-duration", `${duration}s`);
+      node.style.animationDelay = `${-(Math.random() * duration).toFixed(1)}s`;
+      node.style.fontSize = `${58 + (index % 6) * 8}px`;
     });
   };
 
@@ -259,6 +310,9 @@
   });
 
   window.addEventListener("resize", () => {
+    if (document.body.classList.contains("theme-space")) {
+      ensureSpaceCats();
+    }
     applyThemeLabel();
   });
 
