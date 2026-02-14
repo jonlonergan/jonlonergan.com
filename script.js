@@ -227,7 +227,7 @@
       const duration = 14 + Math.random() * 10;
       node.style.setProperty("--cat-duration", `${duration}s`);
       node.style.animationDelay = `${-(Math.random() * duration).toFixed(1)}s`;
-      node.style.fontSize = `${58 + (index % 6) * 8}px`;
+      node.style.fontSize = `${42 + (index % 6) * 6}px`;
     });
   };
 
@@ -310,10 +310,13 @@
   });
 
   window.addEventListener("resize", () => {
+    applyThemeLabel();
+  });
+
+  window.addEventListener("orientationchange", () => {
     if (document.body.classList.contains("theme-space")) {
       ensureSpaceCats();
     }
-    applyThemeLabel();
   });
 
   document.addEventListener("click", (event) => {

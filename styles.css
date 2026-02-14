@@ -89,19 +89,14 @@ html.theme-light {
 
 
 h1, h2, h3 {
-  font-family: "Fraunces", "Times New Roman", serif;
+  font-family: inherit;
   font-weight: 700;
   margin: 0 0 12px;
 }
 
 h1 {
-  font-family: "Source Serif 4", "Georgia", serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-kerning: normal;
-  text-rendering: auto;
   font-weight: 600;
-  letter-spacing: 0.01em;
+  letter-spacing: 0;
 }
 
 .theme-dark h1,
@@ -469,7 +464,7 @@ a {
   position: absolute;
   left: var(--start-x, -120px);
   top: var(--start-y, 220px);
-  font-size: 78px;
+  font-size: 48px;
   animation: catFloat var(--cat-duration, 18s) linear infinite;
   animation-fill-mode: both;
   filter: drop-shadow(0 0 6px rgba(220, 252, 255, 0.6));
