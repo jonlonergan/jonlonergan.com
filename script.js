@@ -10,11 +10,15 @@
   const themeColorDarkMeta = document.querySelector("#theme-color-dark");
   let themeColorMeta = document.querySelector("#theme-color") || document.querySelector('meta[name="theme-color"]');
 
+  const getEffectiveMode = () => (themeMode === "system" ? (systemQuery.matches ? "dark" : "light") : themeMode);
+
   const syncBrowserChrome = (mode) => {
     const computed = getComputedStyle(document.documentElement);
     const lightColor = computed.getPropertyValue("--safari-tint-light").trim() || "#fcfbf8";
     const darkColor = computed.getPropertyValue("--safari-tint-dark").trim() || "#000000";
-    const color = mode === "dark" ? darkColor : lightColor;
+    const spaceColor = computed.getPropertyValue("--safari-tint-space").trim() || darkColor;
+    const spaceOn = document.body.classList.contains("theme-space");
+    const color = spaceOn ? spaceColor : mode === "dark" ? darkColor : lightColor;
 
     if (themeColorLightMeta) {
       themeColorLightMeta.setAttribute("content", lightColor);
@@ -142,8 +146,10 @@
 
   const setSpaceTheme = (on) => {
     document.body.classList.toggle("theme-space", on);
+    document.documentElement.classList.toggle("theme-space", on);
     setLayerActive(".space-scene", on);
     setLayerActive(".space-cats", on);
+    syncBrowserChrome(getEffectiveMode());
   };
 
   const syncWeatherLayers = () => {
